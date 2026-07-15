@@ -1,0 +1,12 @@
+apiVersion: s3.aws.platform.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  name: shared-bucket
+  namespace: default
+spec:
+  parameters:
+    region: us-east-1
+    # Same bucketName is applied on BOTH control planes so they share one bucket.
+    bucketName: resilient-ctp-demo-shared-bucket
+    resilience:
+      enabled: true

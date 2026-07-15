@@ -1,0 +1,40 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: buckets.s3.aws.platform.upbound.io
+  labels:
+    crossplane.io/xrd: buckets.s3.aws.platform.upbound.io
+spec:
+  compositeTypeRef:
+    apiVersion: s3.aws.platform.upbound.io/v1alpha1
+    kind: Bucket
+  mode: Pipeline
+  pipeline:
+  # Fetch the local ResilientControlPlane so the bucket can follow its published
+  # management policy (the resilience convention contract).
+  - step: fetch-resilience
+    functionRef:
+      name: crossplane-contrib-function-extra-resources
+    input:
+      apiVersion: extra-resources.fn.crossplane.io/v1beta1
+      kind: Input
+      spec:
+        extraResources:
+        # Optional fetch (minMatch 0) of the local ResilientControlPlane so the
+        # bucket can follow its published managementPolicy. minMatch 0 keeps it
+        # fail-safe: when no RCP is present the bucket defaults to Observe rather
+        # than failing the composition.
+        - apiVersion: resilient.platform.upbound.io/v1alpha1
+          kind: ResilientControlPlane
+          into: resilience
+          type: Selector
+          namespace: default
+          selector:
+            minMatch: 0
+            maxMatch: 10
+  - step: bucket
+    functionRef:
+      name: upbound-configuration-aws-s3bucket
+  - step: auto-ready
+    functionRef:
+      name: crossplane-contrib-function-auto-ready

@@ -1,0 +1,30 @@
+apiVersion: meta.dev.upbound.io/v2alpha1
+kind: Project
+metadata:
+  name: configuration-aws-s3
+spec:
+  dependsOn:
+  - apiVersion: pkg.crossplane.io/v1
+    kind: Provider
+    package: xpkg.upbound.io/upbound/provider-aws-s3
+    version: '>=v2.6.0'
+  - apiVersion: pkg.crossplane.io/v1
+    kind: Function
+    package: xpkg.upbound.io/crossplane-contrib/function-extra-resources
+    version: '>=v0.3.0'
+  - apiVersion: pkg.crossplane.io/v1
+    kind: Function
+    package: xpkg.upbound.io/crossplane-contrib/function-auto-ready
+    version: '>=v0.6.4'
+  description: |
+    Crossplane v2 configuration that lets a user claim an S3 Bucket in a region.
+    Resilience-aware: consumes ResilientControlPlane.status.managementPolicy so a
+    standby control plane observes the same bucket while the leader manages it.
+  license: Apache-2.0
+  maintainer: Upbound <support@upbound.io>
+  readme: |
+    # configuration-aws-s3 (v2)
+    Claim a Bucket in a region. Resilience-aware for use with
+    configuration-resilient-ctp.
+  repository: xpkg.upbound.io/upbound/configuration-aws-s3
+  source: github.com/upbound/configuration-aws-s3
