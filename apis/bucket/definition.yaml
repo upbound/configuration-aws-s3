@@ -9,62 +9,62 @@ spec:
     kind: Bucket
     plural: buckets
   versions:
-  - name: v1alpha1
-    served: true
-    referenceable: true
-    schema:
-      openAPIV3Schema:
-        type: object
-        required:
-        - spec
-        properties:
-          spec:
-            type: object
-            required:
-            - parameters
-            properties:
-              parameters:
-                type: object
-                required:
-                - region
-                - bucketName
-                properties:
-                  region:
-                    type: string
-                    description: AWS region for the bucket.
-                  bucketName:
-                    type: string
-                    description: >-
-                      Globally-unique S3 bucket name. Use the SAME value on every
-                      control plane in a resilience set so they all reference the
-                      one bucket (via crossplane.io/external-name); the leader
-                      manages it, standbys observe it.
-                  providerConfigName:
-                    type: string
-                    default: default
-                  resilience:
-                    type: object
-                    description: >-
-                      Resilience integration. When enabled, this bucket's
-                      managementPolicies follow the local ResilientControlPlane's
-                      published decision (leader -> ["*"], standby -> ["Observe"]).
-                    properties:
-                      enabled:
-                        type: boolean
-                        default: true
-                      resilientControlPlaneName:
-                        type: string
-                        description: >-
-                          Optional name of the ResilientControlPlane XR to consult.
-                          Defaults to the first one found in the namespace.
-          status:
-            type: object
-            properties:
-              bucketName:
-                type: string
-              managementPolicy:
-                type: array
-                items:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          required:
+            - spec
+          properties:
+            spec:
+              type: object
+              required:
+                - parameters
+              properties:
+                parameters:
+                  type: object
+                  required:
+                    - region
+                    - bucketName
+                  properties:
+                    region:
+                      type: string
+                      description: AWS region for the bucket.
+                    bucketName:
+                      type: string
+                      description: >-
+                        Globally-unique S3 bucket name. Use the SAME value on every
+                        control plane in a resilience set so they all reference the
+                        one bucket (via crossplane.io/external-name); the leader
+                        manages it, standbys observe it.
+                    providerConfigName:
+                      type: string
+                      default: default
+                    resilience:
+                      type: object
+                      description: >-
+                        Resilience integration. When enabled, this bucket's
+                        managementPolicies follow the local ResilientControlPlane's
+                        published decision (leader -> ["*"], standby -> ["Observe"]).
+                      properties:
+                        enabled:
+                          type: boolean
+                          default: true
+                        resilientControlPlaneName:
+                          type: string
+                          description: >-
+                            Optional name of the ResilientControlPlane XR to consult.
+                            Defaults to the first one found in the namespace.
+            status:
+              type: object
+              properties:
+                bucketName:
                   type: string
-              reason:
-                type: string
+                managementPolicy:
+                  type: array
+                  items:
+                    type: string
+                reason:
+                  type: string
