@@ -42,29 +42,18 @@ spec:
                     providerConfigName:
                       type: string
                       default: default
-                    resilience:
-                      type: object
+                    managementPolicies:
+                      type: array
                       description: >-
-                        Resilience integration. When enabled, this bucket's
-                        managementPolicies follow the local ResilientControlPlane's
-                        published decision (leader -> ["*"], standby -> ["Observe"]).
-                      properties:
-                        enabled:
-                          type: boolean
-                          default: true
-                        resilientControlPlaneName:
-                          type: string
-                          description: >-
-                            Optional name of the ResilientControlPlane XR to consult.
-                            Defaults to the first one found in the namespace.
+                        The bucket's intended managementPolicies. Honored on the
+                        resilience leader; reduced to ["Observe"] on standbys by
+                        function-management-policies. Defaults to ["*"].
+                      items:
+                        type: string
+                      default:
+                        - "*"
             status:
               type: object
               properties:
                 bucketName:
-                  type: string
-                managementPolicy:
-                  type: array
-                  items:
-                    type: string
-                reason:
                   type: string
