@@ -11,7 +11,7 @@ spec:
   - apiVersion: pkg.crossplane.io/v1
     kind: Function
     package: xpkg.upbound.io/upbound/function-management-policies
-    version: v0.0.0-fmpdev1
+    version: v0.1.0
   - apiVersion: pkg.crossplane.io/v1
     kind: Function
     package: xpkg.upbound.io/crossplane-contrib/function-auto-ready
