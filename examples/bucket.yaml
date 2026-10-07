@@ -6,7 +6,8 @@ metadata:
 spec:
   parameters:
     region: us-east-1
-    # Same bucketName is applied on BOTH control planes so they share one bucket.
+    # Globally unique. Apply the same bucketName on every control plane in a
+    # resilience set so they all reference one bucket.
     bucketName: resilient-ctp-demo-shared-bucket
-    resilience:
-      enabled: true
+    # Intended policy, applied on the resilience leader only. Defaults to ["*"].
+    managementPolicies: ["*"]
