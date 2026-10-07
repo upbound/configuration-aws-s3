@@ -4,6 +4,28 @@ A Crossplane v2 configuration that lets a user **claim an S3 `Bucket` in a
 region**, implemented with a Python composition function. It is **resilience-aware**
 for use with [`configuration-resilient-ctp`](https://github.com/upbound/configuration-resilient-ctp).
 
+## Install
+
+```yaml
+apiVersion: pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: configuration-aws-s3
+spec:
+  package: xpkg.upbound.io/upbound/configuration-aws-s3:v0.1.0
+```
+
+## Prerequisites
+
+- **A `ResilientControlPlane` in the Bucket's namespace**, from
+  [`configuration-resilient-ctp`](https://github.com/upbound/configuration-resilient-ctp).
+  Without one, the bucket is reduced to `["Observe"]` (fail-safe), so Crossplane
+  observes an existing bucket and never creates one. This package is meant for
+  resilience sets; it is not a standalone bucket API.
+- **A namespaced AWS `ProviderConfig`** (`aws.m.upbound.io/v1beta1`) in the
+  Bucket's namespace, named `default` or as set in `spec.parameters.providerConfigName`.
+  A namespaced ProviderConfig reads its credentials Secret from its own namespace.
+
 ## Usage
 
 ```yaml

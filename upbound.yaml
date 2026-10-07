@@ -18,8 +18,9 @@ spec:
     version: '>=v0.6.4'
   description: |
     Crossplane v2 configuration that lets a user claim an S3 Bucket in a region.
-    Resilience-aware: consumes ResilientControlPlane.status.managementPolicy so a
-    standby control plane observes the same bucket while the leader manages it.
+    Resilience-aware: function-management-policies reads the local
+    ResilientControlPlane's leadership, so a standby control plane observes the
+    same bucket while the leader manages it.
   license: Apache-2.0
   maintainer: Upbound <support@upbound.io>
   readme: |
